@@ -19,7 +19,6 @@ Vagrant.configure("2") do |config|
     kmaster.vm.hostname = "kube-master"
     kmaster.vm.network "private_network", ip: "172.28.128.10"
     kmaster.vm.network "forwarded_port", guest: 6443, host: 6443
-    kmaster.vm.network "forwarded_port", guest: 8080, host: 8080
 
     kmaster.vm.provision "shell", path: "kubernetes/kubernetes-master-setup.sh"
   end
