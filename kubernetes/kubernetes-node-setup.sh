@@ -10,3 +10,5 @@ EOF
 
 apt-get update
 apt-get install -y kubeadm kubelet kubernetes-cni
+
+eval $(cat /vagrant/join-command)

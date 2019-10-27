@@ -17,22 +17,23 @@ Vagrant.configure("2") do |config|
     end
     
     kmaster.vm.hostname = "kube-master"
-    kmaster.vm.network "private_network", type: "dhcp"
+    kmaster.vm.network "private_network", ip: "172.28.128.10"
     kmaster.vm.network "forwarded_port", guest: 6443, host: 6443
+    kmaster.vm.network "forwarded_port", guest: 8080, host: 8080
 
     kmaster.vm.provision "shell", path: "kubernetes/kubernetes-master-setup.sh"
   end
 
   config.vm.define "knode1" do |knode1|
     knode1.vm.hostname = "kube-node-1"
-    knode1.vm.network "private_network", type: "dhcp"
+    knode1.vm.network "private_network", ip: "172.28.128.11"
 
     knode1.vm.provision "shell", path: "kubernetes/kubernetes-node-setup.sh"
   end
 
   config.vm.define "knode2" do |knode2|
     knode2.vm.hostname = "kube-node-2"
-    knode2.vm.network "private_network", type: "dhcp"
+    knode2.vm.network "private_network", ip: "172.28.128.12"
 
     knode2.vm.provision "shell", path: "kubernetes/kubernetes-node-setup.sh"
   end

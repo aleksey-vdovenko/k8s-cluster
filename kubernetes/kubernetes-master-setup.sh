@@ -11,14 +11,15 @@ EOF
 apt-get update
 apt-get install -y kubeadm kubectl kubelet kubernetes-cni
 
-# kubeadm init \
-#   --pod-network-cidr=10.244.0.0/16 \
-#   --apiserver-advertise-address=172.28.128.3
+kubeadm init \
+  --pod-network-cidr=10.244.0.0/16 \
+  --apiserver-advertise-address=172.28.128.10
 
-# mkdir -p $HOME/.kube
-# sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-# sudo chown $(id -u):$(id -g) $HOME/.kube/config
-# echo "export KUBECONFIG=$HOME/admin.conf" | tee -a ~/.bashrc
+mkdir -p /home/vagrant/.kube && chown vagrant:vagrant /home/vagrant/.kube
+cp -i /etc/kubernetes/admin.conf /home/vagrant/.kube/config && chown vagrant:vagrant /home/vagrant/.kube/config
+echo "export KUBECONFIG=/home/vagrant/.kube/config" | tee -a /home/vagrant/.bashrc
 
-# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
-# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+kubeadm token create --print-join-command > /vagrant/join-command
