@@ -28,3 +28,10 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
 kubeadm token create --print-join-command > /vagrant/join-command
+
+
+# Add the following for vagrant vms
+# nano /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+# Environment="KUBELET_EXTRA_ARGS=--node-ip=172.28.128.10"
+# Environment="KUBELET_EXTRA_ARGS=--node-ip=172.28.128.11"
+# Environment="KUBELET_EXTRA_ARGS=--node-ip=172.28.128.12"
